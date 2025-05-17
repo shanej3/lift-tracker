@@ -13,12 +13,16 @@ export default function Stopwatch({ isRunning, time, setTime}) {
 
     // Cleanup interval on unmount
     return () => clearInterval(interval);
-  }, [isRunning]);
+  }, [isRunning, time, setTime]);
 
   const formatTime = (time) => {
     const ms = ('0' + Math.floor((time % 1000) / 10)).slice(-2);
     const secs = ('0' + Math.floor((time / 1000) % 60)).slice(-2);
     const mins = ('0' + Math.floor(time / 60000)).slice(-2);
+    const hrs = ('0' + Math.floor(time / 3600000)).slice(-2);
+    if (hrs > 0) {
+      return `${hrs}:${mins}:${secs}:${ms}`;
+    }
     return `${mins}:${secs}:${ms}`;
   };
 

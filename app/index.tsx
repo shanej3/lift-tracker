@@ -6,10 +6,13 @@ import Stopwatch from "../components/Stopwatch";
 
 export default function Index() {
 
-  const [isRunning, setRunning] = useState(false);
-  const [reps, setReps] = useState(0);
+  const [restIsRunning, setRunning] = useState(false);
+  const [totalIsRunning, setTotalRunning] = useState(true);
 
-  const [time, setTime] = useState(0);
+  const [sets, setReps] = useState(0);
+
+  const [restTime, setRestTime] = useState(0);
+  const [totalTime, setTotalTime] = useState(0);
 
 
  
@@ -22,10 +25,11 @@ export default function Index() {
         alignItems: "center",
       }}
     >
+      <Stopwatch isRunning={totalIsRunning} time={totalTime} setTime={setTotalTime} />
       <TouchableOpacity style={styles.mainButton} onPress={() => { 
         setRunning(true); 
-        setReps(reps + 1);
-        setTime(0);
+        setReps(sets + 1);
+        setRestTime(0);
         
         }}>
         <Text
@@ -36,9 +40,9 @@ export default function Index() {
       }}>
         <Text>RESET</Text>
       </TouchableOpacity>
-      <Text>{isRunning ? 'Running' : 'stopped'}</Text>
-      <Text>{reps}</Text>
-      <Stopwatch isRunning={isRunning} time={time} setTime={setTime} />
+      <Text>{restIsRunning ? 'Running' : 'stopped'}</Text>
+      <Text>{sets}</Text>
+      <Stopwatch isRunning={restIsRunning} time={restTime} setTime={setRestTime} />
     </View>
   );
 }
