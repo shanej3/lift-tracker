@@ -14,9 +14,9 @@ export default function Index() {
   const [restTime, setRestTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
 
+  const [timerTime, setTimerTime] = useState(0);
 
- 
-  
+
   return (
     <View
       style={{
@@ -25,11 +25,21 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Stopwatch isRunning={totalIsRunning} time={totalTime} setTime={setTotalTime} />
+      <Stopwatch isRunning={totalIsRunning} time={totalTime} setTime={setTotalTime} size="small"/>
+
+      <TouchableOpacity style ={styles.mainButton} onPress={() => 
+      {
+        setTimerTime(timerTime + 30000);
+        console.log(timerTime);
+      }}> 
+      <Text>  +  </Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.mainButton} onPress={() => { 
         setRunning(true); 
         setReps(sets + 1);
         setRestTime(0);
+        setTimerTime(timerTime);
         
         }}>
         <Text
@@ -42,7 +52,9 @@ export default function Index() {
       </TouchableOpacity>
       <Text>{restIsRunning ? 'Running' : 'stopped'}</Text>
       <Text>{sets}</Text>
-      <Stopwatch isRunning={restIsRunning} time={restTime} setTime={setRestTime} />
+      <Stopwatch isRunning={restIsRunning} time={restTime} setTime={setRestTime} size="large" />
+      
+      
     </View>
   );
 }

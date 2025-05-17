@@ -7,7 +7,7 @@ export default function Stopwatch({ isRunning, time, setTime, size}) {
     let interval;
     if (isRunning) {
       interval = setInterval(() => {
-      setTime(prev => prev + 10); // increase by 10ms every 10ms
+      setTime(prev => prev - 10); // increase by 10ms every 10ms
     }, 10);
     }
 
