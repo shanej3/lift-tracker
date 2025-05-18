@@ -1,19 +1,28 @@
 import { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Stopwatch({ isRunning, time, setTime, size}) {
+export default function Timer({ isRunning, time, setTime, size, startTime, duration }) {
 
   useEffect(() => {
     let interval;
-    if (isRunning) {
+    let length = duration * 30 * 1000;  // [time] * 30 seconds 
+    setTime(length);
+
+    if (isRunning && startTime) {
       interval = setInterval(() => {
-      setTime(prev => prev - 10); // increase by 10ms every 10ms
-    }, 10);
+        const elapsed = Date.now() - startTime;
+        setTime(length - elapsed);
+        if (length - elapsed <= 0) {
+          clearInterval(interval);
+          setTime(0);
+        }
+      }, 10); // update every 10ms
+    } else if (!isRunning) {
+      clearInterval(interval);
     }
 
-    // Cleanup interval on unmount
     return () => clearInterval(interval);
-  }, [isRunning, time, setTime]);
+  }, [isRunning, startTime, setTime, duration]);
 
   const formatTime = (time) => {
     const ms = ('0' + Math.floor((time % 1000) / 10)).slice(-2);

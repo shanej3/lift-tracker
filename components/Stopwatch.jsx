@@ -10,7 +10,7 @@ export default function Stopwatch({ isRunning, time, setTime, size, startTime })
       interval = setInterval(() => {
         const elapsed = Date.now() - startTime;
         setTime(elapsed);
-      }, 10); // update every 100ms
+      }, 10); // update every 10ms
     } else if (!isRunning) {
       clearInterval(interval);
     }

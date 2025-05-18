@@ -1,13 +1,14 @@
 
 import { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
 import Stopwatch from "../components/Stopwatch";
+import Timer from "../components/Timer";
 
 
 export default function Index() {
   // "rest" stopwatch/timer resets when hit rest button
-  const [restIsRunning, setRunning] = useState(false);
+  const [restIsRunning, setRestRunning] = useState(false);
   const [restTime, setRestTime] = useState(0);
   const [restStartTime, setRestStartTime] = useState(0);
   // "total" stopwatch/timer is supposed to run for the entire workout
@@ -18,8 +19,45 @@ export default function Index() {
   // each time you rest, you finish/add a set
   const [sets, setSets] = useState(0);
 
+  // starts at 0 (disabled), increments by 30 sec whenver user wishes
+  const [timerLength, setTimerLength] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(false);
+  const [timerStartTime, setTimerStartTime] = useState(0);
+
+  const mainButtonPressed = () => {
+    if (timerLength > 0) {
+      // run timer
+    }
+    else {
+      // run stopwatch
+    }
+    setRestRunning(true); 
+          setSets(sets + 1);
+          setRestTime(0);
+          setRestStartTime(Date.now());
+  }
+
+  const plusButtonPressed = () => {
+    setTimerLength(timerLength + 1);
+    console.log("Timer length: " + timerLength);
+  }
+  const minusButtonPressed = () => {
+    if (timerLength > 0) {
+      setTimerLength(timerLength - 1);
+      console.log("timer length: " + timerLength);
+    }
+  }
+
 
   return (
+    <ImageBackground
+      source={require("../assets/background.png")}
+      resizeMode="cover"
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}>
     <View
       style={{
         flex: 1,
@@ -33,7 +71,18 @@ export default function Index() {
         flex: 1,
         }}>
         <Stopwatch isRunning={totalIsRunning} time={totalTime} setTime={setTotalTime} size="small" startTime={totalStartTime}/>
+  
+        
+        <TouchableOpacity onPress={plusButtonPressed}>
+          <Text
+            style={styles.mainButtonText}>+</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={minusButtonPressed}>
+          <Text
+            style={styles.mainButtonText}>-</Text>
+        </TouchableOpacity>
       </View>
+
 {/* middle row */}
       <View
       style={{
@@ -41,14 +90,21 @@ export default function Index() {
 
         <Text style={styles.setsText}>{sets}</Text>
 
+        {timerLength > 0 ? 
+        <Timer isRunning={restIsRunning} time={restTime} setTime={setRestTime} size="large" startTime={restStartTime} duration={timerLength} />
+        : 
         <Stopwatch isRunning={restIsRunning} time={restTime} setTime={setRestTime} size="large" startTime={restStartTime} />
         
+        }
+        
+        
+         
+
+
         {/* rest button */}
         <TouchableOpacity style={styles.mainButton} onPress={() => { 
-          setRunning(true); 
-          setSets(sets + 1);
-          setRestTime(0);
-          setRestStartTime(Date.now());
+          mainButtonPressed();
+          
           }}>
           <Text
             style={styles.mainButtonText}>REST</Text>
@@ -56,7 +112,7 @@ export default function Index() {
 
         {/* reset button */}
         <TouchableOpacity style={styles.resetButton} onPress={() => {
-          setRunning(false);
+          setRestRunning(false);
           setRestTime(0);
           setSets(0); 
         }}>
@@ -73,6 +129,7 @@ export default function Index() {
       
       
     </View>
+    </ImageBackground>
   );
 }
 
@@ -88,7 +145,7 @@ const styles = {
     borderWidth: 1,
   },
   resetButton: {
-    backgroundColor: "pink",
+    backgroundColor: "#a1c5e6",
     paddingLeft: 50,
     paddingRight: 50,
     paddingTop: 25,
