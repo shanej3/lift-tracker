@@ -25,16 +25,10 @@ export default function Index() {
   const [timerStartTime, setTimerStartTime] = useState(0);
 
   const mainButtonPressed = () => {
-    if (timerLength > 0) {
-      // run timer
-    }
-    else {
-      // run stopwatch
-    }
     setRestRunning(true); 
-          setSets(sets + 1);
-          setRestTime(0);
-          setRestStartTime(Date.now());
+    setSets(sets + 1);
+    setRestTime(0);
+    setRestStartTime(Date.now());
   }
 
   const plusButtonPressed = () => {
@@ -77,6 +71,7 @@ export default function Index() {
           <Text
             style={styles.mainButtonText}>+</Text>
         </TouchableOpacity>
+        <Text>{timerLength * 30}</Text>
         <TouchableOpacity onPress={minusButtonPressed}>
           <Text
             style={styles.mainButtonText}>-</Text>
@@ -96,9 +91,7 @@ export default function Index() {
         <Stopwatch isRunning={restIsRunning} time={restTime} setTime={setRestTime} size="large" startTime={restStartTime} />
         
         }
-        
-        
-         
+
 
 
         {/* rest button */}
