@@ -5,6 +5,8 @@ import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import Stopwatch from "../components/Stopwatch";
 import Timer from "../components/Timer";
 
+// testing 
+// testing
 
 export default function Index() {
   // "rest" stopwatch/timer resets when hit rest button
