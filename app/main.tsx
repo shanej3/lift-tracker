@@ -5,6 +5,9 @@ import { ImageBackground, Modal, Text, TouchableOpacity, View } from "react-nati
 import Stopwatch from "../components/Stopwatch";
 import Timer from "../components/Timer";
 
+import DatabaseHandler from "./database.jsx";
+
+
 // testing 
 // testing
 
@@ -47,7 +50,7 @@ export default function Index() {
     }
   }
 
-  const logWorkout = () => {
+  const logWorkout = (startTime: any) => {
     // setTotalRunning(false);
     // setRestRunning(false);
     // setTotalTime(0);
@@ -58,6 +61,12 @@ export default function Index() {
     // setTimerStartTime(0);
     console.log("Workout logged");
     setModalVisible(true);
+    const time = startTime;
+    const date = new Date(time);
+    const formatted = date.toISOString().split("T")[0];
+    console.log(formatted);
+    DatabaseHandler(formatted);
+
     
   }
 
@@ -97,7 +106,7 @@ export default function Index() {
           <View style={styles.overlay}>
             <View style={styles.box}>
               <Text>Would you like to log this exercise?</Text>
-              <TouchableOpacity onPress={logWorkout}>
+              <TouchableOpacity onPress={() => logWorkout(totalStartTime)}>
                 <Text>Yes</Text>
               </TouchableOpacity>
             </View>

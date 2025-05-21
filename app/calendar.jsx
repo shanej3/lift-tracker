@@ -1,0 +1,28 @@
+import { Calendar } from "react-native-calendars";
+import data from "./local_storage.json";
+
+const test = (day) => {
+    //console.log("Selected day", day);
+    console.log(day.dateString);
+
+}
+
+export default function GymCalendar() {
+
+    const markedDates = Object.keys(data).reduce((acc, date) => {
+        // Object.keys(data) returns an array of dates
+        // .reduce goes through each date and builds a new object
+        // we want to map over the dates and create objects like "date: {marked: true, dotColor: 'lightgreen', textColor: 'lightgreen'}"
+        acc[date] = {  // acc = accumulator
+            marked: true,
+            dotColor: 'lightgreen',
+            textColor: 'lightgreen'
+        };
+        return acc;
+    }, {}); // initial value is an empty object
+    return (
+        <Calendar 
+        markedDates={markedDates}
+        onDayPress={test}/>
+    );
+}
