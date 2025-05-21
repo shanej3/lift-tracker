@@ -52,8 +52,8 @@ export default function Index() {
   }
 
   const logWorkout = (startTime: any, summaryText: string) => {
-    // setTotalRunning(false);
-    // setRestRunning(false);
+    setTotalRunning(false);
+    setRestRunning(false);
     // setTotalTime(0);
     // setRestTime(0);
     // setSets(0);

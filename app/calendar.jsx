@@ -9,10 +9,12 @@ const test = (day) => {
 
 export default function GymCalendar() {
 
-    const markedDates = Object.keys(data).reduce((acc, date) => {
-        // Object.keys(data) returns an array of dates
-        // .reduce goes through each date and builds a new object
+    const markedDates = Object.keys(data).reduce((acc, key) => {
+        // Object.keys(data) returns an array of IDs [1, 2 , 3, ...]
+        // .reduce goes through each and builds a new object
         // we want to map over the dates and create objects like "date: {marked: true, dotColor: 'lightgreen', textColor: 'lightgreen'}"
+        const entry = data[key];
+        const date = entry.date;
         acc[date] = {  // acc = accumulator
             marked: true,
             dotColor: 'lightgreen',
