@@ -1,7 +1,7 @@
 ### Gym timer
 #### Time your workouts
 - Make sure you rest enough between sets with the rest timer
-- keep track of your teps
+- keep track of your sets 
 - automatically keeps track of total workout time
 #### Track your workouts
 - Workouts are stored on an easy to use calendar screen
