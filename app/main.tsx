@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Modal, Text, TouchableOpacity, View } from "react-native";
 
 import Stopwatch from "../components/Stopwatch";
 import Timer from "../components/Timer";
@@ -26,6 +26,9 @@ export default function Index() {
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerStartTime, setTimerStartTime] = useState(0);
 
+  //Modal 
+  const [modalVisible, setModalVisible] = useState(false);
+
   const mainButtonPressed = () => {
     if (timerLength > 0) {
       // run timer
@@ -37,6 +40,7 @@ export default function Index() {
           setSets(sets + 1);
           setRestTime(0);
           setRestStartTime(Date.now());
+          console.log(Date.now());
   }
 
   const plusButtonPressed = () => {
@@ -48,6 +52,20 @@ export default function Index() {
       setTimerLength(timerLength - 1);
       console.log("timer length: " + timerLength);
     }
+  }
+
+  const logWorkout = () => {
+    // setTotalRunning(false);
+    // setRestRunning(false);
+    // setTotalTime(0);
+    // setRestTime(0);
+    // setSets(0);
+    // setTimerLength(0);
+    // setTimerRunning(false);
+    // setTimerStartTime(0);
+    console.log("Workout logged");
+    setModalVisible(true);
+    
   }
 
 
@@ -74,7 +92,25 @@ export default function Index() {
         }}>
         <Stopwatch isRunning={totalIsRunning} time={totalTime} setTime={setTotalTime} size="small" startTime={totalStartTime}/>
   
-        
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Text style={styles.mainButtonText}>STOP</Text>
+        </TouchableOpacity>
+        <Modal
+          visible={modalVisible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.overlay}>
+            <View style={styles.box}>
+              <Text>Would you like to log this exercise?</Text>
+              <TouchableOpacity onPress={logWorkout}>
+                <Text>Yes</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
         <TouchableOpacity onPress={plusButtonPressed}>
           <Text
             style={styles.mainButtonText}>+</Text>
@@ -168,5 +204,20 @@ const styles = {
     color: "black",
     textAlign: "center" as const,
     marginTop: 50,
-  }
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  box: {
+    width: 300,
+    height: 300,
+    backgroundColor: "white",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 250,
+  },
 };
