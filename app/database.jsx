@@ -6,4 +6,6 @@ export default function DatabaseHandler(dayEntry, summaryEntry) {
         summaryEntry: summaryEntry
     }
     data[newEntry.date] = newEntry;
+
+    console.log(newEntry);
 }

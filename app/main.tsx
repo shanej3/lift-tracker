@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ImageBackground, Modal, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import Stopwatch from "../components/Stopwatch";
 import Timer from "../components/Timer";
@@ -31,6 +31,7 @@ export default function Index() {
 
   //Modal 
   const [modalVisible, setModalVisible] = useState(false);
+  const [summaryText, setSummaryText] = useState("");
 
   const mainButtonPressed = () => {
     setRestRunning(true); 
@@ -50,7 +51,7 @@ export default function Index() {
     }
   }
 
-  const logWorkout = (startTime: any) => {
+  const logWorkout = (startTime: any, summaryText: string) => {
     // setTotalRunning(false);
     // setRestRunning(false);
     // setTotalTime(0);
@@ -65,7 +66,7 @@ export default function Index() {
     const date = new Date(time);
     const formatted = date.toISOString().split("T")[0];
     console.log(formatted);
-    DatabaseHandler(formatted);
+    DatabaseHandler(formatted, summaryText);
 
     
   }
@@ -106,7 +107,14 @@ export default function Index() {
           <View style={styles.overlay}>
             <View style={styles.box}>
               <Text>Would you like to log this exercise?</Text>
-              <TouchableOpacity onPress={() => logWorkout(totalStartTime)}>
+              <TextInput 
+                style={styles.input}
+                onChangeText={setSummaryText} 
+                value={summaryText}
+                placeholder="Workout summary">
+
+              </TextInput>
+              <TouchableOpacity onPress={() => logWorkout(totalStartTime, summaryText)}>
                 <Text>Yes</Text>
               </TouchableOpacity>
             </View>
@@ -221,4 +229,9 @@ const styles = {
     alignItems: "center",
     marginBottom: 250,
   },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    width: 200,}
 };
