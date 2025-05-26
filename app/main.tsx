@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { ImageBackground, Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-import Stopwatch from "../components/Stopwatch";
-import Timer from "../components/Timer";
+import Stopwatch from "../components/Stopwatch.jsx";
+import Timer from "../components/Timer.jsx";
 
 import DatabaseHandler from "./database.jsx";
 
@@ -51,7 +51,7 @@ export default function Index() {
     }
   }
 
-  const logWorkout = (startTime: any, summaryText: string) => {
+  const logWorkout = (startTime: any, summaryText: string, totalTime: any) => {
     setTotalRunning(false);
     setRestRunning(false);
     // setTotalTime(0);
@@ -62,11 +62,23 @@ export default function Index() {
     // setTimerStartTime(0);
     console.log("Workout logged");
     setModalVisible(true);
+
+    // convert startTime to a date string
     const time = startTime;
     const date = new Date(time);
-    const formatted = date.toISOString().split("T")[0];
-    console.log(formatted);
-    DatabaseHandler(formatted, summaryText);
+    const yearMonthDay = date.toISOString().split("T")[0];
+
+    // convert totalTime to a string
+    const totalSeconds = Math.floor(totalTime / 1000);
+    const totalMinutes = Math.floor(totalSeconds / 60);
+    const totalHours = Math.floor(totalMinutes / 60);
+    const remainingSeconds = totalSeconds % 60;
+    const remainingMinutes = totalMinutes % 60;
+    const totalTimeString = `${totalHours.toString().padStart(2, '0')}:${remainingMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    
+
+    console.log(yearMonthDay);
+    DatabaseHandler(yearMonthDay, summaryText, totalTimeString);
 
     
   }
@@ -114,7 +126,7 @@ export default function Index() {
                 placeholder="Workout summary">
 
               </TextInput>
-              <TouchableOpacity onPress={() => logWorkout(totalStartTime, summaryText)}>
+              <TouchableOpacity onPress={() => logWorkout(totalStartTime, summaryText, totalTime)}>
                 <Text>Yes</Text>
               </TouchableOpacity>
             </View>
