@@ -5,7 +5,7 @@ import { ImageBackground, Modal, Text, TextInput, TouchableOpacity, View } from 
 import Stopwatch from "../components/Stopwatch.jsx";
 import Timer from "../components/Timer.jsx";
 
-import DatabaseHandler from "./database.jsx";
+import addWorkout from "./database.jsx";
 
 
 // testing 
@@ -78,7 +78,7 @@ export default function Index() {
     
 
     console.log(yearMonthDay);
-    DatabaseHandler(yearMonthDay, summaryText, totalTimeString);
+    addWorkout(yearMonthDay, summaryText, totalTimeString);
 
     
   }
@@ -229,16 +229,16 @@ const styles = {
   overlay: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "center" as const,
+    alignItems: "center" as const,
   },
   box: {
     width: 300,
     height: 300,
     backgroundColor: "white",
     borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "center" as const,
+    alignItems: "center" as const,
     marginBottom: 250,
   },
   input: {

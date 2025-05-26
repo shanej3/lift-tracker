@@ -1,10 +1,11 @@
 import { Calendar } from "react-native-calendars";
-import { getDayData } from "./database.jsx";
+import { getAllData, getDayData } from "./database.jsx";
 import data from "./local_storage.json";
 
 const test = (day) => {
     console.log("Selected day", day);
     getDayData();
+    getAllData()
 
 }
 

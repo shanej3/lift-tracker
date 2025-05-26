@@ -1,7 +1,11 @@
 // START WORKOUT page
+import 'react-native-url-polyfill/auto';
 
 import { useRouter } from "expo-router";
 import { Dimensions, Text, TouchableOpacity, View } from "react-native";
+
+
+
 
 
 const windowHeight = Dimensions.get("window").height;
