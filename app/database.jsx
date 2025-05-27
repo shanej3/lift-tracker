@@ -13,8 +13,20 @@ export default function addWorkout(dayEntry, summaryEntry, totalTime) {
     console.log(newEntry);
 }
 
-export function getDayData() {
-    console.log("getData called test");
+export async function getDayData(day) {
+    const { data, error } = await supabase
+      .from("workouts")
+      .select('*')
+      .eq('date', day);
+
+    if (error) {
+      console.error("Error fetching workouts:", error);
+      return null;
+    } else {
+      //console.log(data);
+      return data
+    }
+
 }
 
 export async function getAllData() {
@@ -24,7 +36,9 @@ export async function getAllData() {
 
     if (error) {
       console.error("Error fetching workouts:", error);
+      return null
     } else {
-      console.log("Fetched workouts:", workouts);
+      // console.log("Fetched workouts:", workouts);
+      return workouts;
     }
 }
