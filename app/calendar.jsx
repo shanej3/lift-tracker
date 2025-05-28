@@ -14,20 +14,25 @@ export default function GymCalendar() {
     const [summary, setSummary] = useState(null);
     const [length, setLength] = useState(null);
 
+    const [dayData, setDayDayData] = useState(null);
+
     const dayPressed = async (day) => {
         const date = day.dateString
-        const data = await getDayData(day.dateString);
+        const data = await getDayData(date);
+
+        setDayDayData(data || []);
         setSelectedDate(date);
         setModalVisible(true);
+        //console.log(data);
 
-        if (data && data.length > 0) {
-            setSummary(data[0].summary);
-            setLength(data[0].length);
-        }
-        else {
-            setSummary(null);
-            setLength(null);
-        }
+        // if (data && data.length > 0) {
+        //     setSummary(data[0].summary);
+        //     setLength(data[0].length);
+        // }
+        // else {
+        //     setSummary(null);
+        //     setLength(null);
+        // }
 
 
 
@@ -62,8 +67,7 @@ export default function GymCalendar() {
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
             date={selectedDate}
-            summary={summary}
-            length={length}>
+            workouts={dayData || []}>
 
             </DayModal>
 

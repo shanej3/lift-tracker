@@ -1,20 +1,25 @@
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const DayModal = ({ visible, onClose, date, summary, length }) => {
+const DayModal = ({ visible, onClose, date, workouts }) => {
     return (
         <Modal
             visible={visible}>
                 <View style={styles.overlay}>
                     <View style={styles.modalContent}>
                         <Text style={styles.dateText}>{date}</Text>
-                        {summary && length ? (
-                            <>
-                                <Text style={styles.dateText}>{summary}</Text>
-                                <Text style={styles.dateText}>{length}</Text>
-                            </>
-                        ) : (
-                            <Text style={styles.dateText}>No workouts this day!</Text>
-                        )}
+                            <ScrollView style={{ maxHeight: 300 }}>
+                                {workouts.length > 0 ? (
+                                workouts.map((item, index) => (
+                                    <View key={item.id || index} style={styles.workoutCard}>
+                                    <Text style={styles.summary}>{item.summary}</Text>
+                                    <Text style={styles.length}>Length: {item.length}</Text>
+                                    </View>
+                                ))
+                                ) : (
+                                <Text>No workouts logged for this day.</Text>
+                                )}
+                        </ScrollView>
+
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                             <Text style={styles.closeButtonText}>Close</Text>
                         </TouchableOpacity>
@@ -53,6 +58,19 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
     },
+    workoutCard: {
+    backgroundColor: '#f1f1f1',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  summary: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  length: {
+    color: '#555',
+  },
 });
 
 export default DayModal;
