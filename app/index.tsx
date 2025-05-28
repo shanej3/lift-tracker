@@ -27,7 +27,6 @@ export default function Start() {
             <TouchableOpacity style={styles.calendarButton} onPress={() => router.push("/calendar")}>
                 <Text>Calendar</Text>
             </TouchableOpacity>
-            
         </View>
     )
 }

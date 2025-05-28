@@ -5,13 +5,13 @@ import { ImageBackground, Modal, Text, TextInput, TouchableOpacity, View } from 
 import Stopwatch from "../components/Stopwatch.jsx";
 import Timer from "../components/Timer.jsx";
 
-import addWorkout from "./database.jsx";
-
-
-// testing 
-// testing
+import { router } from "expo-router";
+import { addData } from "./database.jsx";
 
 export default function Index() {
+
+
+
   // "rest" stopwatch/timer resets when hit rest button
   const [restIsRunning, setRestRunning] = useState(false);
   const [restTime, setRestTime] = useState(0);
@@ -60,7 +60,6 @@ export default function Index() {
     // setTimerLength(0);
     // setTimerRunning(false);
     // setTimerStartTime(0);
-    console.log("Workout logged");
     setModalVisible(true);
 
     // convert startTime to a date string
@@ -77,8 +76,9 @@ export default function Index() {
     const totalTimeString = `${totalHours.toString().padStart(2, '0')}:${remainingMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     
 
-    console.log(yearMonthDay);
-    addWorkout(yearMonthDay, summaryText, totalTimeString);
+    //console.log(yearMonthDay);
+    addData(yearMonthDay, summaryText, totalTimeString);
+    router.push("/calendar")
 
     
   }

@@ -1,10 +1,10 @@
 import { Calendar } from "react-native-calendars";
-import { getDayData } from "./database.jsx";
+import { getAllData, getDayData } from "./database.jsx";
 import data from "./local_storage.json";
 
 const dayPressed = (day) => {
     getDayData(day.dateString); // turn data into "YEAR-MONTH-DAY" format
-    //getAllData()
+    getAllData();
 
 }
 
@@ -27,5 +27,5 @@ export default function GymCalendar() {
         <Calendar 
         markedDates={markedDates}
         onDayPress={dayPressed}/>
-    );
+    )
 }

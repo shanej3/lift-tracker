@@ -1,23 +1,17 @@
-import data from "./local_storage.json";
-import { supabase } from "./supabase";
 
-
-export default function addWorkout(dayEntry, summaryEntry, totalTime) {
-    const newEntry = {
-        date: dayEntry,
-        summary: summaryEntry,
-        totalTime: totalTime
-    }
-    data[newEntry.date] = newEntry;
-
-    console.log(newEntry);
-}
+import { generateUUID, getCurrentUserID, supabase } from "./supabase";
 
 export async function getDayData(day) {
+  const userId = await getCurrentUserID();
+  if (!userId) {
+    console.error("No user ID found. Cannot fetch workouts for the specific day.");
+    return null;
+  }
     const { data, error } = await supabase
       .from("workouts")
       .select('*')
-      .eq('date', day);
+      .eq('date', day)
+      .eq('user_id', userId);
 
     if (error) {
       console.error("Error fetching workouts:", error);
@@ -30,9 +24,15 @@ export async function getDayData(day) {
 }
 
 export async function getAllData() {
+  const userId = await getCurrentUserID();
+  if (!userId) {
+    console.error("No user ID found. Cannot fetch all workouts.");
+    return null;
+  }
     const { data: workouts, error } = await supabase
       .from("workouts")
-      .select("*");
+      .select("*")
+      .eq('user_id', userId);
 
     if (error) {
       console.error("Error fetching workouts:", error);
@@ -41,4 +41,49 @@ export async function getAllData() {
       // console.log("Fetched workouts:", workouts);
       return workouts;
     }
+}
+
+export async function addData(dayEntry, summaryEntry, totalTime) {
+  // CHECK
+  const userId = await getCurrentUserID();
+  if (!userId) {
+    console.error("No user ID found. Cannot add workout.");
+    return null;
+  }
+  const { data, error } = await supabase
+    .from("workouts")
+    .insert([
+      {
+        id: generateUUID(),
+        user_id: userId,
+        date: dayEntry,
+        summary: summaryEntry,
+        length: totalTime
+      }
+    ]);
+  if (error) {
+    console.error("Error adding workout:", error);
+    return null;
+  }
+  console.log("Added workout:", data);
+  return data;
+}
+
+export async function deleteData(workoutId) {
+  const userId = await getCurrentUserID();
+  if (!userId) {
+    console.error("No user ID found. Cannot delete workout.");
+    return null;
+  }
+  // CHECK
+  const { data, error } = await supabase
+    .from("workouts")
+    .delete()
+    .eq('id', workoutId)
+    .eq('user_id', userId)
+  if (error) {
+    console.error("Error deleting workout:", error);
+    return null;
+  }
+  return data;
 }

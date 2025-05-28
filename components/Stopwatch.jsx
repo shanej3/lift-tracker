@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function Stopwatch({ isRunning, time, setTime, size, startTime }) {
 
   useEffect(() => {
+    
     let interval;
 
     if (isRunning && startTime) {
@@ -17,6 +18,7 @@ export default function Stopwatch({ isRunning, time, setTime, size, startTime })
 
     return () => clearInterval(interval);
   }, [isRunning, startTime, setTime]);
+  
 
   const formatTime = (time) => {
     const ms = ('0' + Math.floor((time % 1000) / 10)).slice(-2);
