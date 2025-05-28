@@ -74,11 +74,9 @@ export default function Index() {
     const remainingSeconds = totalSeconds % 60;
     const remainingMinutes = totalMinutes % 60;
     const totalTimeString = `${totalHours.toString().padStart(2, '0')}:${remainingMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-    
 
-    //console.log(yearMonthDay);
     addData(yearMonthDay, summaryText, totalTimeString);
-    router.push("/calendar")
+    router.push("/calendar"); 
 
     
   }
