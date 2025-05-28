@@ -13,7 +13,7 @@
 - When you're finished with your workout, click STOP and you will be prompted to track your workout, and provide a brief summary of the workout (leg day, upperbody, etc.)
 - You can also edit and delete your workouts within the calendar screen
 
-#### Tools used
+### Tools used
 - Languages: Javascript/Typescript
 - React Native / Expo
 - [Wix calendar library](https://github.com/wix/react-native-calendars)
