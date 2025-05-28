@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ImageBackground, Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import Stopwatch from "../components/Stopwatch.jsx";
 import Timer from "../components/Timer.jsx";
@@ -86,162 +86,263 @@ export default function Index() {
     <ImageBackground
       source={require("../assets/background.png")}
       resizeMode="cover"
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "column"
-      }}
+      style={styles.background}
     >
+      <View style={styles.container}>
+        {/* Top Row */}
+        <View style={styles.topRow}>
+          <Stopwatch
+            isRunning={totalIsRunning}
+            time={totalTime}
+            setTime={setTotalTime}
+            size="small"
+            startTime={totalStartTime}
+          />
 
-{/* top row */}
-      <View 
-      style={{
-        flex: 1,
-        }}>
-        <Stopwatch isRunning={totalIsRunning} time={totalTime} setTime={setTotalTime} size="small" startTime={totalStartTime}/>
-  
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <Text style={styles.mainButtonText}>STOP</Text>
-        </TouchableOpacity>
-        <Modal
-          visible={modalVisible}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={styles.overlay}>
-            <View style={styles.box}>
-              <Text>Would you like to log this exercise?</Text>
-              <TextInput 
-                style={styles.input}
-                onChangeText={setSummaryText} 
-                value={summaryText}
-                placeholder="Workout summary">
+          <TouchableOpacity
+            style={styles.stopButton}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.stopButtonText}>STOP</Text>
+          </TouchableOpacity>
 
-              </TextInput>
-              <TouchableOpacity onPress={() => logWorkoutButton(totalStartTime, summaryText, totalTime)}>
-                <Text>Yes</Text>
-              </TouchableOpacity>
+          <Modal
+            visible={modalVisible}
+            transparent={true}
+            animationType="slide"
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View style={styles.overlay}>
+              <View style={styles.modalBox}>
+                <Text style={styles.modalText}>Would you like to log this exercise?</Text>
+
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setSummaryText}
+                  value={summaryText}
+                  placeholder="Workout summary"
+                  placeholderTextColor="#999"
+                />
+
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={() => logWorkoutButton(totalStartTime, summaryText, totalTime)}
+                >
+                  <Text style={styles.modalButtonText}>Yes</Text>
+                </TouchableOpacity>
+              </View>
             </View>
+          </Modal>
+
+          <View style={styles.adjustButtonsRow}>
+            <TouchableOpacity onPress={minusButtonPressed} style={styles.adjustButton}>
+              <Text style={styles.adjustButtonText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.timerLengthText}>{timerLength * 30}</Text>
+            <TouchableOpacity onPress={plusButtonPressed} style={styles.adjustButton}>
+              <Text style={styles.adjustButtonText}>+</Text>
+            </TouchableOpacity>
           </View>
-        </Modal>
+        </View>
 
-        <TouchableOpacity onPress={plusButtonPressed}>
-          <Text
-            style={styles.mainButtonText}>+</Text>
-        </TouchableOpacity>
-        <Text>{timerLength * 30}</Text>
-        <TouchableOpacity onPress={minusButtonPressed}>
-          <Text
-            style={styles.mainButtonText}>-</Text>
-        </TouchableOpacity>
+        {/* Middle Row */}
+        <View style={styles.middleRow}>
+          <Text style={styles.setsText}>{sets}</Text>
+
+          {timerLength > 0 ? (
+            <Timer
+              isRunning={restIsRunning}
+              time={restTime}
+              setTime={setRestTime}
+              size="large"
+              startTime={restStartTime}
+              duration={timerLength}
+            />
+          ) : (
+            <Stopwatch
+              isRunning={restIsRunning}
+              time={restTime}
+              setTime={setRestTime}
+              size="large"
+              startTime={restStartTime}
+            />
+          )}
+
+          <TouchableOpacity style={styles.restButton} onPress={mainButtonPressed}>
+            <Text style={styles.restButtonText}>REST</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.resetButton}
+            onPress={() => {
+              setRestRunning(false);
+              setRestTime(0);
+              setSets(0);
+            }}
+          >
+            <Text style={styles.resetButtonText}>NEW</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Bottom Row */}
+        <View style={styles.bottomRow} />
       </View>
-
-{/* middle row */}
-      <View
-      style={{
-        flex: 3}}>
-
-        <Text style={styles.setsText}>{sets}</Text>
-
-        {timerLength > 0 ? 
-        <Timer isRunning={restIsRunning} time={restTime} setTime={setRestTime} size="large" startTime={restStartTime} duration={timerLength} />
-        : 
-        <Stopwatch isRunning={restIsRunning} time={restTime} setTime={setRestTime} size="large" startTime={restStartTime} />
-        
-        }
-
-
-
-        {/* rest button */}
-        <TouchableOpacity style={styles.mainButton} onPress={() => { 
-          mainButtonPressed();
-          
-          }}>
-          <Text
-            style={styles.mainButtonText}>REST</Text>
-        </TouchableOpacity>
-
-        {/* reset button */}
-        <TouchableOpacity style={styles.resetButton} onPress={() => {
-          setRestRunning(false);
-          setRestTime(0);
-          setSets(0); 
-        }}>
-          <Text>NEW</Text>
-        </TouchableOpacity>
-        
-        
-      </View>
-{/* bottom row */}
-        <View style={{
-          flex: 1,
-        }}></View>
-      
-      
-      
-    </View>
     </ImageBackground>
   );
 }
 
-const styles = {
-  mainButton: {
-    backgroundColor: "lightblue",
-    paddingLeft: 100,
-    paddingRight: 100,
-    paddingTop: 50,
-    paddingBottom: 50,
-    borderRadius: 5,
-    alignSelf: "center" as const,
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    width: "100%",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  topRow: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  stopButton: {
+    backgroundColor: "#E74C3C",
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    borderRadius: 10,
     borderWidth: 1,
+    borderColor: "#C0392B",
+    marginVertical: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 6,
   },
-  resetButton: {
-    backgroundColor: "#a1c5e6",
-    paddingLeft: 50,
-    paddingRight: 50,
-    paddingTop: 25,
-    paddingBottom: 25,
-    borderRadius: 5,
-    marginTop: 20,
-    alignSelf: "center" as const,
-    borderWidth: 1,
-  },
-
-  mainButtonText: {
-    color: "black",
-    fontSize: 32,
-  },
-  setsText: {
-    fontSize: 100,
-    fontWeight: 'bold' as 'bold',
-    color: "black",
-    textAlign: "center" as const,
-    marginTop: 50,
+  stopButtonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "700",
+    textAlign: "center",
   },
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center" as const,
-    alignItems: "center" as const,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
-  box: {
-    width: 300,
-    height: 300,
+  modalBox: {
     backgroundColor: "white",
-    borderRadius: 10,
-    justifyContent: "center" as const,
-    alignItems: "center" as const,
-    marginBottom: 250,
+    width: "90%",
+    maxWidth: 350,
+    borderRadius: 15,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 15,
+    textAlign: "center",
   },
   input: {
-    height: 40,
-    borderColor: "gray",
+    width: "100%",
+    height: 45,
+    borderColor: "#ccc",
     borderWidth: 1,
-    width: 200,}
-};
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 25,
+    fontSize: 16,
+  },
+  modalButton: {
+    backgroundColor: "#4A90E2",
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    borderRadius: 10,
+  },
+  modalButtonText: {
+    color: "white",
+    fontWeight: "600",
+    fontSize: 18,
+    textAlign: "center",
+  },
+  adjustButtonsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 15,
+  },
+  adjustButton: {
+    backgroundColor: "#7BBAFF",
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginHorizontal: 15,
+  },
+  adjustButtonText: {
+    fontSize: 24,
+    color: "white",
+    fontWeight: "700",
+  },
+  timerLengthText: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "black",
+  },
+  middleRow: {
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  setsText: {
+    fontSize: 80,
+    fontWeight: "bold",
+    color: "black",
+    textAlign: "center",
+    marginBottom: 25,
+  },
+  restButton: {
+    backgroundColor: "#4A90E2",
+    paddingVertical: 20,
+    paddingHorizontal: 80,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#357ABD",
+    marginVertical: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  restButtonText: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  resetButton: {
+    backgroundColor: "#a1c5e6",
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    borderRadius: 10,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: "#7ea3cc",
+    alignSelf: "center",
+  },
+  resetButtonText: {
+    color: "#34495e",
+    fontWeight: "600",
+    fontSize: 18,
+    textAlign: "center",
+  },
+  bottomRow: {
+    flex: 0,
+  },
+});

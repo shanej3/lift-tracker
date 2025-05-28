@@ -11,21 +11,21 @@ const DayModal = ({ visible, onClose, date, workouts, onDeleteWorkout }) => {
                                 {workouts.length > 0 ? (
                                 workouts.map((item, index) => (
                                     <View key={item.id || index} style={styles.workoutCard}>
-                                    <Text style={styles.summary}>{item.summary}</Text>
-                                    <Text style={styles.length}>Length: {item.length}</Text>
-                                    
-                                    <TouchableOpacity
-                                        style={styles.deleteButton}
-                                        onPress={() => onDeleteWorkout(item.id)}
-                                    >
-                                        <Text style={styles.deleteButtonText}>Delete</Text>
-                                    </TouchableOpacity>
+                                        <Text style={styles.summary}>{item.summary}</Text>
+                                        <Text style={styles.length}>Length: {item.length}</Text>
+                                        
+                                        <TouchableOpacity
+                                            style={styles.deleteButton}
+                                            onPress={() => onDeleteWorkout(item.id)}
+                                        >
+                                            <Text style={styles.deleteButtonText}>Delete</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 ))
                                 ) : (
                                 <Text>No workouts logged for this day.</Text>
                                 )}
-      </ScrollView>
+                            </ScrollView>
 
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                             <Text style={styles.closeButtonText}>Close</Text>
