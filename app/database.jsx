@@ -113,3 +113,27 @@ export async function deleteData(workoutId) {
   }
   return data;
 }
+
+export async function updateData(workoutId, {dayEntry, summaryEntry, totalTime }) {
+  const userId = await getCurrentUserID();
+  if (!userId) {
+    console.error("No user ID found. Cannot update workout.");
+    return null;
+  }
+  // CHECK
+  const { data, error } = await supabase
+    .from("workouts")
+    .update({
+      date: dayEntry,
+      summary: summaryEntry,
+      length: totalTime
+    })
+    .eq('id', workoutId)
+    .eq('user_id', userId);
+  
+  if (error) {
+    console.error("Error updating workout:", error);
+    return null;
+  }
+  return data;
+}

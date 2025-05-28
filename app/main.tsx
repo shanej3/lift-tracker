@@ -77,7 +77,6 @@ export default function Index() {
 
     addData(yearMonthDay, summaryText, totalTimeString);
     router.push("/calendar"); 
-
     
   }
 
