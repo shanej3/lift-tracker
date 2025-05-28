@@ -43,6 +43,31 @@ export async function getAllData() {
     }
 }
 
+export async function getUniqueWorkoutDays() {
+  const { data, error } = await supabase
+    .from("workouts")
+    .select("date")
+    .order("date", { ascending: true })
+    .not('date', 'is', null);
+
+  if (error) {
+    console.error("Error fetching unique workout days:", error);
+    return null;
+  }
+
+  const uniqueDaysSet = new Set();
+  data.forEach(entry => {
+    if (entry.date) {
+      const day = new Date(entry.date).toISOString().split('T')[0];
+      uniqueDaysSet.add(day);
+    }
+  });
+
+  return Array.from(uniqueDaysSet);
+}
+
+
+
 export async function addData(dayEntry, summaryEntry, totalTime) {
   // CHECK
   const userId = await getCurrentUserID();

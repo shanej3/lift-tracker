@@ -1,28 +1,33 @@
+import { useEffect, useState } from 'react';
 import { Calendar } from "react-native-calendars";
-import { getAllData, getDayData } from "./database.jsx";
-import data from "./local_storage.json";
+import { getDayData, getUniqueWorkoutDays } from "./database.jsx";
 
 const dayPressed = (day) => {
     getDayData(day.dateString); // turn data into "YEAR-MONTH-DAY" format
-    getAllData();
+    //getAllData();
 
 }
 
 export default function GymCalendar() {
+    const [markedDates, setMarkedDates] = useState({});
 
-    const markedDates = Object.keys(data).reduce((acc, key) => {
-        // Object.keys(data) returns an array of IDs [1, 2 , 3, ...]
-        // .reduce goes through each and builds a new object
-        // we want to map over the dates and create objects like "date: {marked: true, dotColor: 'lightgreen', textColor: 'lightgreen'}"
-        const entry = data[key];
-        const date = entry.date;
-        acc[date] = {  // acc = accumulator
-            marked: true,
-            dotColor: 'lightgreen',
-            textColor: 'lightgreen'
-        };
-        return acc;
-    }, {}); // initial value is an empty object
+    useEffect(() => {
+        async function fetchWorkoutDays() {
+            const days = await getUniqueWorkoutDays();
+             if (days) {
+            // Convert array of "YYYY-MM-DD" to format required by Calendar
+            const marked = {};
+            days.forEach(day => {
+            marked[day] = { marked: true };
+            });
+            setMarkedDates(marked);
+      }
+    }
+
+      fetchWorkoutDays();
+    }, []);
+
+
     return (
         <Calendar 
         markedDates={markedDates}

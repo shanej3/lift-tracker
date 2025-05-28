@@ -65,7 +65,7 @@ export default function Index() {
     // convert startTime to a date string
     const time = startTime;
     const date = new Date(time);
-    const yearMonthDay = date.toISOString().split("T")[0];
+    const yearMonthDay = date.toLocaleDateString('en-CA');
 
     // convert totalTime to a string
     const totalSeconds = Math.floor(totalTime / 1000);
