@@ -1,6 +1,6 @@
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const DayModal = ({ visible, onClose, date, workouts }) => {
+const DayModal = ({ visible, onClose, date, workouts, onDeleteWorkout }) => {
     return (
         <Modal
             visible={visible}>
@@ -13,12 +13,19 @@ const DayModal = ({ visible, onClose, date, workouts }) => {
                                     <View key={item.id || index} style={styles.workoutCard}>
                                     <Text style={styles.summary}>{item.summary}</Text>
                                     <Text style={styles.length}>Length: {item.length}</Text>
+                                    
+                                    <TouchableOpacity
+                                        style={styles.deleteButton}
+                                        onPress={() => onDeleteWorkout(item.id)}
+                                    >
+                                        <Text style={styles.deleteButtonText}>Delete</Text>
+                                    </TouchableOpacity>
                                     </View>
                                 ))
                                 ) : (
                                 <Text>No workouts logged for this day.</Text>
                                 )}
-                        </ScrollView>
+      </ScrollView>
 
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                             <Text style={styles.closeButtonText}>Close</Text>
@@ -31,45 +38,59 @@ const DayModal = ({ visible, onClose, date, workouts }) => {
 }
 
 const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalContent: {
-        width: '80%',
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 20,
-        alignItems: 'center',
-    },
-    dateText: {
-        fontSize: 24,
-        marginBottom: 20,
-    },
-    closeButton: {
-        backgroundColor: '#007BFF',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-    },
-    closeButtonText: {
-        color: 'white',
-        fontSize: 16,
-    },
-    workoutCard: {
-    backgroundColor: '#f1f1f1',
-    padding: 12,
-    borderRadius: 8,
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    maxHeight: '80%',
+  },
+  dateText: {
+    fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 10,
   },
+  workoutCard: {
+    marginBottom: 15,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+  },
   summary: {
-    fontWeight: 'bold',
     fontSize: 16,
+    fontWeight: '600',
   },
   length: {
+    fontSize: 14,
     color: '#555',
+  },
+  deleteButton: {
+    marginTop: 8,
+    padding: 6,
+    backgroundColor: 'red',
+    borderRadius: 4,
+    alignSelf: 'flex-start',
+  },
+  deleteButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#2196F3',
+    padding: 12,
+    borderRadius: 8,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontWeight: '600',
+    textAlign: 'center',
   },
 });
 

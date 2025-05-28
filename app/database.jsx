@@ -2,6 +2,7 @@
 import { generateUUID, getCurrentUserID, supabase } from "./supabase";
 
 export async function getDayData(day) {
+
   const userId = await getCurrentUserID();
   if (!userId) {
     console.error("No user ID found. Cannot fetch workouts for the specific day.");

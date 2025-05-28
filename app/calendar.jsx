@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Calendar } from "react-native-calendars";
-import { getDayData, getUniqueWorkoutDays } from "./database.jsx";
+import { deleteData, getDayData, getUniqueWorkoutDays } from "./database.jsx";
 
 import DayModal from '../components/DayModal.jsx';
 
@@ -11,34 +11,28 @@ export default function GymCalendar() {
     const [markedDates, setMarkedDates] = useState({});
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [summary, setSummary] = useState(null);
-    const [length, setLength] = useState(null);
 
-    const [dayData, setDayDayData] = useState(null);
+    const [dayData, setDayDayData] = useState([]);
 
     const dayPressed = async (day) => {
-        const date = day.dateString
+        const date = await day.dateString
         const data = await getDayData(date);
 
         setDayDayData(data || []);
         setSelectedDate(date);
         setModalVisible(true);
-        //console.log(data);
-
-        // if (data && data.length > 0) {
-        //     setSummary(data[0].summary);
-        //     setLength(data[0].length);
-        // }
-        // else {
-        //     setSummary(null);
-        //     setLength(null);
-        // }
-
-
-
-        //getAllData();
+        //console.log("getDayDate", data)
 
 }
+
+    const onDeleteWorkout = async (workoutId) => {
+        try {
+            await deleteData(workoutId);
+            setDayDayData(prev => prev.filter(workout => workout.id !== workoutId));
+        } catch (error) {
+            alert('Failed to delete workout.');
+        }
+    }
 
     useEffect(() => {
         async function fetchWorkoutDays() {
@@ -67,9 +61,10 @@ export default function GymCalendar() {
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
             date={selectedDate}
-            workouts={dayData || []}>
+            workouts={dayData || []}
+            onDeleteWorkout={onDeleteWorkout}>
 
-            </DayModal>
+        </DayModal>
 
         </View>
         

@@ -51,7 +51,7 @@ export default function Index() {
     }
   }
 
-  const logWorkout = (startTime: any, summaryText: string, totalTime: any) => {
+  const logWorkoutButton = (startTime: any, summaryText: string, totalTime: any) => {
     setTotalRunning(false);
     setRestRunning(false);
     // setTotalTime(0);
@@ -60,7 +60,7 @@ export default function Index() {
     // setTimerLength(0);
     // setTimerRunning(false);
     // setTimerStartTime(0);
-    setModalVisible(true);
+    setModalVisible(false);
 
     // convert startTime to a date string
     const time = startTime;
@@ -124,7 +124,7 @@ export default function Index() {
                 placeholder="Workout summary">
 
               </TextInput>
-              <TouchableOpacity onPress={() => logWorkout(totalStartTime, summaryText, totalTime)}>
+              <TouchableOpacity onPress={() => logWorkoutButton(totalStartTime, summaryText, totalTime)}>
                 <Text>Yes</Text>
               </TouchableOpacity>
             </View>
