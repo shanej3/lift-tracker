@@ -1,7 +1,8 @@
 
 import { useState } from "react";
-import { ImageBackground, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import LogWorkoutModal from "../components/LogWorkoutModal.jsx";
 import Stopwatch from "../components/Stopwatch.jsx";
 import Timer from "../components/Timer.jsx";
 
@@ -83,7 +84,6 @@ export default function Index() {
 
   return (
     <ImageBackground
-      source={require("../assets/background.png")}
       resizeMode="cover"
       style={styles.background}
     >
@@ -105,33 +105,14 @@ export default function Index() {
             <Text style={styles.stopButtonText}>STOP</Text>
           </TouchableOpacity>
 
-          <Modal
+          <LogWorkoutModal
             visible={modalVisible}
-            transparent={true}
-            animationType="slide"
-            onRequestClose={() => setModalVisible(false)}
-          >
-            <View style={styles.overlay}>
-              <View style={styles.modalBox}>
-                <Text style={styles.modalText}>Would you like to log this exercise?</Text>
-
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setSummaryText}
-                  value={summaryText}
-                  placeholder="Workout summary"
-                  placeholderTextColor="#999"
-                />
-
-                <TouchableOpacity
-                  style={styles.modalButton}
-                  onPress={() => logWorkoutButton(totalStartTime, summaryText, totalTime)}
-                >
-                  <Text style={styles.modalButtonText}>Yes</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
+            onClose={() => setModalVisible(false)}
+            onSubmit={logWorkoutButton}
+            initialStartTime={totalStartTime}
+            totalTime={totalTime}
+          />
+          
 
           <View style={styles.adjustButtonsRow}>
             <TouchableOpacity onPress={minusButtonPressed} style={styles.adjustButton}>

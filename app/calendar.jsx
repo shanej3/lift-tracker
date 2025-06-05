@@ -16,7 +16,7 @@ export default function GymCalendar() {
     const [selectedWorkout, setSelectedWorkout] = useState(null);  // workout currently being edited
 
     // Called when a day on the calendar is pressed
-    const dayPressed = async (day) => {
+    const handleDayPress = async (day) => {
         const date = day.dateString;
         const data = await getDayData(date);
 
@@ -26,7 +26,7 @@ export default function GymCalendar() {
     }
 
     // Delete workout handler
-    const onDeleteWorkout = async (workoutId) => {
+    const handleDeleteWorkout = async (workoutId) => {
         try {
             await deleteData(workoutId);
             setDayData(prev => prev.filter(workout => workout.id !== workoutId));
@@ -34,6 +34,8 @@ export default function GymCalendar() {
             alert('Failed to delete workout.');
         }
     }
+
+    //const handleAddWorkout = async ()
 
     // Called when Edit button is pressed in DayModal
     const handleEditPress = (workoutId) => {
@@ -45,7 +47,7 @@ export default function GymCalendar() {
     // Called when Save is pressed in EditModal
     const handleSaveEdit = async (updatedData) => {
         try {
-            await await updateData(selectedWorkout.id, { // from database.js
+            await updateData(selectedWorkout.id, { // from database.js
                 dayEntry: selectedWorkout.date,
                 summaryEntry: updatedData.summary,
                 totalTime: updatedData.length
@@ -80,7 +82,7 @@ export default function GymCalendar() {
         <View style={{ flex: 1, backgroundColor: 'white' }}>
             <Calendar
                 markedDates={markedDates}
-                onDayPress={dayPressed}
+                onDayPress={handleDayPress}
             />
 
             <DayModal
@@ -88,7 +90,7 @@ export default function GymCalendar() {
                 onClose={() => setDayModalVisible(false)}
                 date={selectedDate}
                 workouts={dayData || []}
-                onDeleteWorkout={onDeleteWorkout}
+                onDeleteWorkout={handleDeleteWorkout}
                 onEditWorkout={handleEditPress} // pass the function to open EditModal
             />
 

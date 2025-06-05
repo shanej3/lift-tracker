@@ -14,18 +14,24 @@ const DayModal = ({ visible, onClose, date, workouts, onDeleteWorkout, onEditWor
                                         <Text style={styles.summary}>{item.summary}</Text>
                                         <Text style={styles.length}>Length: {item.length}</Text>
                                         
-                                        <TouchableOpacity
-                                            style={styles.deleteButton}
-                                            onPress={() => onDeleteWorkout(item.id)}
-                                        >
-                                            <Text style={styles.deleteButtonText}>Delete</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
+                                        <View style={styles.buttonLayout}>
+                                            
+                                            <TouchableOpacity
                                             style={styles.editButton}
                                             onPress={() => onEditWorkout(item.id)}
-                                        >
+                                            >
                                             <Text style={styles.deleteButtonText}>Edit</Text>
-                                        </TouchableOpacity>
+                                            </TouchableOpacity>
+
+                                            <TouchableOpacity
+                                            style={styles.deleteButton}
+                                            onPress={() => onDeleteWorkout(item.id)}
+                                            >
+                                            <Text style={styles.deleteButtonText}>Delete</Text>
+                                            </TouchableOpacity>
+                                        
+                                        </View>
+                                        
                                     </View>
                                 ))
                                 ) : (
@@ -36,6 +42,7 @@ const DayModal = ({ visible, onClose, date, workouts, onDeleteWorkout, onEditWor
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                             <Text style={styles.closeButtonText}>Close</Text>
                         </TouchableOpacity>
+
 
                     </View>
                 </View>
@@ -67,6 +74,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 8,
+    
+  },
+  buttonLayout: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+
   },
   summary: {
     fontSize: 16,
@@ -81,14 +95,14 @@ const styles = StyleSheet.create({
     padding: 6,
     backgroundColor: 'red',
     borderRadius: 4,
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-end',
   },
   editButton: {
     marginTop: 8,
     padding: 6,
     backgroundColor: 'green',
     borderRadius: 4,
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-end',
   },
   deleteButtonText: {
     color: 'white',
