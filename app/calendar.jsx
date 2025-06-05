@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Calendar } from "react-native-calendars";
-import { deleteData, getDayData, getUniqueWorkoutDays, updateData } from "./database.jsx";
+import { addData, deleteData, getDayData, getUniqueWorkoutDays, updateData } from "./database.jsx";
 
+import AddWorkoutModal from '../components/AddWorkoutModal.jsx';
 import DayModal from '../components/DayModal.jsx';
 import EditModal from '../components/EditModal.jsx';
 
 export default function GymCalendar() {
+    // markedDates show which days have workouts logged
     const [markedDates, setMarkedDates] = useState({});
     const [dayModalVisible, setDayModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false);
+
+    const [addModalVisible, setAddModalVisible] = useState(false);
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [dayData, setDayData] = useState([]);
@@ -29,13 +33,33 @@ export default function GymCalendar() {
     const handleDeleteWorkout = async (workoutId) => {
         try {
             await deleteData(workoutId);
+            // update the UI by removing the deleted workout
             setDayData(prev => prev.filter(workout => workout.id !== workoutId));
         } catch (error) {
             alert('Failed to delete workout.');
         }
     }
 
-    //const handleAddWorkout = async ()
+    const handleAddWorkout = async (newWorkout) => {
+        try {
+            await addData(
+                selectedDate,
+                newWorkout.summary,
+                newWorkout.length
+            );
+            setDayData(prev => [
+                ...prev,
+                {
+                    id: newWorkout.id, // assuming newWorkout has an id
+                    date: selectedDate,
+                    summary: newWorkout.summary,
+                    length: newWorkout.length
+                }
+            ]);
+        } catch (error) {
+            alert('Failed to add workout.');
+        }
+    }
 
     // Called when Edit button is pressed in DayModal
     const handleEditPress = (workoutId) => {
@@ -92,6 +116,7 @@ export default function GymCalendar() {
                 workouts={dayData || []}
                 onDeleteWorkout={handleDeleteWorkout}
                 onEditWorkout={handleEditPress} // pass the function to open EditModal
+                onAddWorkout={() => setAddModalVisible(true)}  // pass the function to add new workout
             />
 
             {selectedWorkout && (  // only renders when there is a workout selected
@@ -102,6 +127,11 @@ export default function GymCalendar() {
                     initialData={selectedWorkout}  // pass workout to edit
                 />
             )}
+            <AddWorkoutModal
+                visible={addModalVisible}
+                onClose={() => setAddModalVisible(false)}
+                onSave={handleAddWorkout}  // pass add handler
+                ></AddWorkoutModal>
         </View>
     );
 }

@@ -1,6 +1,6 @@
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const DayModal = ({ visible, onClose, date, workouts, onDeleteWorkout, onEditWorkout }) => {
+const DayModal = ({ visible, onClose, date, workouts, onDeleteWorkout, onEditWorkout, onAddWorkout }) => {
     return (
         <Modal
             visible={visible}>
@@ -38,7 +38,9 @@ const DayModal = ({ visible, onClose, date, workouts, onDeleteWorkout, onEditWor
                                 <Text>No workouts logged for this day.</Text>
                                 )}
                             </ScrollView>
-
+                        <TouchableOpacity style={styles.addButton} onPress={onAddWorkout}>
+                            <Text style={styles.addButtonText}>Add Workout</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                             <Text style={styles.closeButtonText}>Close</Text>
                         </TouchableOpacity>
@@ -103,6 +105,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     borderRadius: 4,
     alignSelf: 'flex-end',
+  },
+  addButton: {
+    marginTop: 20,
+    backgroundColor: '#4CAF50',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   deleteButtonText: {
     color: 'white',
