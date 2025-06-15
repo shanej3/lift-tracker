@@ -1,4 +1,5 @@
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLORS } from "../app/theme";
 
 const DayModal = ({ visible, onClose, date, workouts, onDeleteWorkout, onEditWorkout, onAddWorkout }) => {
     return (
@@ -95,20 +96,20 @@ const styles = StyleSheet.create({
   deleteButton: {
     marginTop: 8,
     padding: 6,
-    backgroundColor: 'red',
+    backgroundColor: COLORS.primary_red,
     borderRadius: 4,
     alignSelf: 'flex-end',
   },
   editButton: {
     marginTop: 8,
     padding: 6,
-    backgroundColor: 'green',
+    backgroundColor: COLORS.secondary,
     borderRadius: 4,
     alignSelf: 'flex-end',
   },
   addButton: {
     marginTop: 20,
-    backgroundColor: '#4CAF50',
+    backgroundColor: COLORS.primary,
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -124,13 +125,13 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 20,
-    backgroundColor: '#2196F3',
+    backgroundColor: COLORS.secondary_dark,
     padding: 12,
     borderRadius: 8,
   },
   closeButtonText: {
     color: 'white',
-    fontWeight: '600',
+    fontWeight: '700',
     textAlign: 'center',
   },
 });

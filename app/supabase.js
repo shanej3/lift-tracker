@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import uuid from 'react-native-uuid';
 
 
-
+// this URL and key are fine to share publicly, since I setup row level security (RLS)
 const supabaseUrl = "https://cnstdqqdvaqcimespueu.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNuc3RkcXFkdmFxY2ltZXNwdWV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgyOTQzNzQsImV4cCI6MjA2Mzg3MDM3NH0.QcvOjctDOJNyDbLiiDs7MEyXxhf8i0HoJCGerQdQbEQ";
 

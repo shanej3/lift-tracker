@@ -1,4 +1,5 @@
 // AddWorkoutModal.jsx
+import { COLORS } from '@/app/theme';
 import { useState } from 'react';
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -29,7 +30,7 @@ const AddWorkoutModal = ({ visible, onClose, onSave }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Length (e.g., 45 min)"
+            placeholder="Length (e.g., 45 min, 0:45:00)"
             value={length}
             onChangeText={setLength}
           />
@@ -76,13 +77,13 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
   },
   button: {
-    backgroundColor:'#2196F3',
+    backgroundColor:COLORS.primary,
     paddingVertical:10,
     paddingHorizontal:20,
     borderRadius:6,
   },
   cancel: {
-    backgroundColor:'gray',
+    backgroundColor: COLORS.secondary_dark,
   },
   buttonText: {
     color:'white',

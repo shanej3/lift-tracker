@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { COLORS } from "../app/theme";
 
 export default function LogWorkoutModal({ visible, onClose, onSubmit, initialStartTime, totalTime }) {
     const [summaryText, setSummaryText] = useState('');
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 18,
         marginBottom: 20,
+        fontWeight: '700',
     },
     input: {
         width: '100%',
@@ -55,13 +57,15 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     modalButton: {
-        backgroundColor: '#007BFF',
+        backgroundColor: COLORS.primary,
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+
     },
     modalButtonText: {
         color: 'white',
         fontSize: 16,
+        fontWeight: '700',
     },
 });

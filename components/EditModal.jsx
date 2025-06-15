@@ -1,3 +1,4 @@
+import { COLORS } from '@/app/theme';
 import React, { useEffect, useState } from 'react';
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -74,17 +75,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   saveButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
   },
   saveButtonText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
   closeButton: {
-    backgroundColor: '#f44336',
+    backgroundColor: COLORS.secondary_dark,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
 });
 

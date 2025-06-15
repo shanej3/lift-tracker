@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import 'react-native-url-polyfill/auto';
+import { COLORS } from "./theme";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   startButton: {
-    backgroundColor: "#4A90E2", 
+    backgroundColor: COLORS.primary, 
     paddingVertical: 20,
     paddingHorizontal: 60,
     borderRadius: 10,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     elevation: 5, // shadow
   },
   calendarButton: {
-    backgroundColor: "#7BBAFF",
+    backgroundColor: COLORS.secondary,
     paddingVertical: 15,
     paddingHorizontal: 40,
     borderRadius: 10,

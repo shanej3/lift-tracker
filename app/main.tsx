@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { COLORS } from "./theme";
 
 import LogWorkoutModal from "../components/LogWorkoutModal.jsx";
 import Stopwatch from "../components/Stopwatch.jsx";
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   stopButton: {
-    backgroundColor: "#E74C3C",
+    backgroundColor: COLORS.primary_red,
     paddingVertical: 15,
     paddingHorizontal: 60,
     borderRadius: 10,
@@ -240,25 +241,13 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     fontSize: 16,
   },
-  modalButton: {
-    backgroundColor: "#4A90E2",
-    paddingVertical: 12,
-    paddingHorizontal: 50,
-    borderRadius: 10,
-  },
-  modalButtonText: {
-    color: "white",
-    fontWeight: "600",
-    fontSize: 18,
-    textAlign: "center",
-  },
   adjustButtonsRow: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 15,
   },
   adjustButton: {
-    backgroundColor: "#7BBAFF",
+    backgroundColor: "#9fe3c1",
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 8,
@@ -287,7 +276,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   restButton: {
-    backgroundColor: "#4A90E2",
+    backgroundColor: COLORS.primary,
     paddingVertical: 20,
     paddingHorizontal: 80,
     borderRadius: 10,
@@ -307,7 +296,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   resetButton: {
-    backgroundColor: "#a1c5e6",
+    backgroundColor: COLORS.secondary,
     paddingVertical: 15,
     paddingHorizontal: 60,
     borderRadius: 10,
